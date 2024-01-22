@@ -8,17 +8,24 @@
 </head>
 <body class="bg-indigo-800">
     <% unless request.path_info == "/login" %>
-    <nav class="bg-indigo-900 flex">
-        <ul class="flex p-6 space-x-4 items-apart justify-around w-2/5 m-auto text-white ">
-            <li><a href="/">Home</a></li>
-            <li><a href="/learn">Learn</a></li>
-            <li><a href="/contact">Contact Us</a></li>
-        </ul>
-        <ul class="flex p-6 space-x-4 items-apart w-1/6 justify-around text-white">
-            <li><a class="rounded-lg border-2 w-32 py-2 inline-block text-center" href="/login">Login</a></li>
-            <li><a class="rounded-lg bg-violet-700 w-32 py-2 inline-block text-center" href="/register">Register</a></li>
-        </ul>
-    </nav>
+        <nav class="bg-indigo-900 flex">
+            <ul class="flex p-6 space-x-4 items-apart justify-around w-2/5 m-auto text-white ">
+                <li><a href="/">Home</a></li>
+                <li><a href="/learn">Learn</a></li>
+                <li><a href="/contact">Contact Us</a></li>
+            </ul>
+            <% if session[:user_id] %>
+            <div class="flex p-6 space-x-4 items-apart w-1/4 justify-around text-white" >
+            <%= session[:name] %>
+            <a href="logout" class="rounded-lg bg-red-800 w-32 py-2 inline-block text-center">Logout</a>
+            </div>
+            <% else %>
+            <ul class="flex p-6 space-x-4 items-apart w-1/4 justify-around text-white">
+                <li><a class="rounded-lg border-2 w-32 py-2 inline-block text-center" href="/login">Login</a></li>
+                <li><a class="rounded-lg bg-violet-700 w-32 py-2 inline-block text-center" href="/users/new">Register</a></li>
+            </ul>
+            <% end %>
+        </nav>
     <% end %>
     <hr class="border-slate-400 border-2">
     <%= yield %>

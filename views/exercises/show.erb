@@ -1,0 +1,17 @@
+<div class="w-5/6 mx-auto">
+    <div class="text-center text-white m-10">
+        <h1 class="text-6xl">Exercises</h1>
+    </div>
+
+    <div class="grid grid-cols-3 gap-4">
+    <% @exercises.each do |exercise| %>
+        <a href="/exercises/<%= exercise[:name].downcase %>">
+        <section class="bg-sky-100 rounded-xl p-5 grid grid-cols-3 grid-rows-4 2xl:grid-cols-4 hover:drop-shadow-2xl cursor-pointer">
+            <img src="<%= exercise[:image]%>" alt="diamant" class="row-span-3 col-span-1 place-self-center">
+            <h2 class="row-span-3 col-span-2 2xl:col-span-3 text-center text-5xl font-semibold place-self-center"><%= exercise[:name]%></h2>
+            <p class="row-span-1 col-span-3 2xl:col-span-4"><%= exercise[:stub]%></p>
+        </section>
+        </a>
+    <% end %>
+    </div>
+</div>

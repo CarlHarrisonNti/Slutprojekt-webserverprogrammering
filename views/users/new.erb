@@ -17,5 +17,10 @@
         <div class="flex flex-col items-center justify-center my-3">
             <input type="submit" value="Login" class="bg-indigo-900 text-white rounded-lg w-64 p-2">
         </div>
+        <% if @message %>
+        <div class="flex flex-col items-center justify-center my-3">
+            <p class="text-red-500"><%= @message %></p>
+        </div>
+        <% end %>
     </div>
 </form>

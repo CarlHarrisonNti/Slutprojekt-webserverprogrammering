@@ -8,3 +8,5 @@ gem 'bcrypt'
 gem 'sinatra-contrib'
 gem 'webrick'
 gem 'puma'
+gem "rackup"
+gem 'commonmarker'

@@ -32,7 +32,7 @@ post "/login" do
 end
 
 get "/users/new" do
-  p params
+  #session[:error] = nil
   erb :"users/new"
 end
 
@@ -40,7 +40,7 @@ post "/users/new" do
   email, password, username = params[:email], params[:password], params[:username]
   db = SQLite3::Database.new("db/main.sqlite")
   db.results_as_hash = true
-  if @message = verify_password(password)
+  if session[:error] = verify_password(password)
     redirect "/users/new"
   end
   db.execute("INSERT INTO users (Email, Pwd, Name) VALUES (?, ?, ?)", email, BCrypt::Password.create(password), username)
@@ -50,6 +50,18 @@ end
 get "/logout" do
   session.destroy
   redirect "/"
+end
+
+get "/exercises/new" do
+  erb :"exercises/new"
+end
+
+post "/exercises/new" do
+  name, description = params[:name], params[:description]
+  db = SQLite3::Database.new("db/main.sqlite")
+  db.results_as_hash = true
+  db.execute("INSERT INTO exercises (Name, Description) VALUES (?, ?)", name, description)
+  redirect "/exercises/show"
 end
 
 get "/exercises/show" do

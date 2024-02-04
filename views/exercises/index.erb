@@ -1,10 +1,26 @@
 <div class="w-5/6 mx-auto">
-    <div class="text-center text-white m-10">
-        <h1 class="text-6xl"><%= @exercise[:name]%></h1>
-    </div>
+    <div class="grid grid-cols-5 gap-10 p-10">
+        <div class="col-span-1 flex flex-col gap-8">
+        <section class="bg-sky-100 rounded-xl flex flex-col">
+            <h1 class="text-center text-5xl font-semibold place-self-center p-5"><%= @exercise[:name]%></h1>
+            <img src="<%= @exercise[:image]%>" alt="" class="place-items-center">
+        </section>
+        <section class="bg-sky-100 rounded-xl flex flex-col">
+            <h2 class="text-center text-3xl font-semibold place-self-center p-5">Submit your solution</h2>
+            <form action="/exercises/<%= @exercise[:id]%>/submit" method="POST" class="flex flex-col">
+                <input type="submit" value="Submit" class="place-self-center p-5">
+        </section>
+        <nav class="bg-sky-100 rounded-xl flex flex-col">
+            <h2 class="text-center text-3xl font-semibold place-self-center p-5">Sections</h2>
+            <ul class="flex flex-col">
+            </ul>
 
-    <div class="grid grid-cols-5 gap-4">
-        <div class=""></div>
-        <div></div>
+        </div>
+        <div class="col-span-4">
+            <section class="bg-sky-100 rounded-xl">
+                <h2 class="text-center text-5xl font-semibold place-self-center"><%= @exercise[:header]%></h2>
+                <%= @exercise[:content]%>
+            </section>
+        </div>
     </div>
 </div>

@@ -73,8 +73,8 @@ get "/exercises/show" do
 end
 
 get "/exercises/:name" do
-  @exercise = {name: "Diamond", image: "https://assets.exercism.org/exercises/diamond.svg", stub: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, nam. Vel delectus, dicta rem laudantium magnam."}
-  p Commonmarker.to_html(File.read("./data.md"), options: {
-    parse: { smart: true }})
+  content = Commonmarker.to_html(File.read("./data.md"), options: {
+    parse: { smart: true}, render: {unsafe: true}, extension: {header_ids: "markdown ", table: true} })
+  @exercise = {name: "Diamond", image: "https://assets.exercism.org/exercises/diamond.svg", header: "introduction", content: content}
   erb :"exercises/index"
 end

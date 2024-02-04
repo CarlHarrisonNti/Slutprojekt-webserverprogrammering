@@ -7,10 +7,10 @@ module Verfiers
         if password.length < 8
             result["Password be at least 8 characters long"] = false
         end
-        if password =~ /[A-Z]/
+        unless password =~ /[A-Z]/
             result["Password contain at least one uppercase letter"] = false
         end
-        if password =~ /[a-z]/
+        unless password =~ /[a-z]/
             result["Password contain at least one lowercase letter"] = false
         end
         if password =~ /[0-9]/

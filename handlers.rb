@@ -13,7 +13,7 @@ module Verfiers
         unless password =~ /[a-z]/
             result["Password contain at least one lowercase letter"] = false
         end
-        if password =~ /[0-9]/
+        unless password =~ /[0-9]/
             result["Password contain at least one number"] = false
         end
         result = result.sort_by {|key, value| [value ? 0 : 1, key]}.to_h

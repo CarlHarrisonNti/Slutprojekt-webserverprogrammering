@@ -3,13 +3,16 @@
         <h1 class="text-6xl">Exercises</h1>
     </div>
 
-    <div class="grid grid-cols-3 gap-4">
+    <div class="grid grid-cols-2 2xl:grid-cols-3 gap-4">
     <% @exercises.each do |exercise| %>
         <a href="/exercises/<%= exercise["Name"].downcase %>">
-        <section class="bg-sky-100 rounded-xl p-5 grid grid-cols-3 grid-rows-4 2xl:grid-cols-4 hover:drop-shadow-2xl cursor-pointer">
+        <section class="bg-sky-100 rounded-xl p-5 grid grid-cols-4 grid-rows-4 2xl:grid-cols-5 hover:drop-shadow-2xl cursor-pointer h-56">
             <img src="<%= exercise["Icon"]%>" alt="exercise-icon" class="row-span-3 col-span-1 place-self-center">
-            <h2 class="row-span-3 col-span-2 2xl:col-span-3 text-center text-5xl font-semibold place-self-center"><%= exercise["Name"]%></h2>
-            <p class="row-span-1 col-span-3 2xl:col-span-4"><%= exercise["Blurb"]%></p>
+            <h2 class="row-span-3 col-span-3 2xl:col-span-3 text-center text-5xl font-semibold place-self-center"><%= exercise["Name"]%></h2>
+            <p class="row-span-1 col-span-2 2xl:col-span-3"><%= exercise["Blurb"]%></p>
+            <div class="flex justify-center items-center w-24 h-10 rounded-2xl bg-<%=exercise_color(exercise["Difficulty"])%>-500">
+                <p class=" text-center"><%= exercise_difficulty(exercise["Difficulty"]) %></p>
+            </div>
         </section>
         </a>
     <% end %>

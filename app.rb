@@ -11,6 +11,31 @@ include Verfiers
 
 enable :sessions
 
+helpers do
+  def exercise_color(difficulty)
+    case difficulty
+    when 1..3
+      "green"
+    when 4..6
+      "yellow"
+    when 7..10
+      "red"
+    end
+  end
+
+  def exercise_difficulty(difficulty)
+    case difficulty
+    when 1..3
+      "Easy"
+    when 4..6
+      "Medium"
+    when 7..10
+      "Hard"
+    end
+  end
+end
+
+
 get "/" do
   p session[:user_id]
   erb :index

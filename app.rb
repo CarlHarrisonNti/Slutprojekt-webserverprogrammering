@@ -3,7 +3,9 @@ require "sinatra/reloader"
 require "sqlite3"
 require "bcrypt"
 require 'commonmarker'
+require "securerandom"
 require_relative "handlers.rb"
+require_relative "models.rb"
 
 include Verfiers
 
@@ -20,11 +22,9 @@ end
 
 post "/login" do
   email, password = params[:email], params[:password]
-  db = SQLite3::Database.new("db/main.sqlite")
-  db.results_as_hash = true
-  user = db.execute("SELECT * FROM users WHERE Email = ?", email).first
-  if BCrypt::Password.new(user["Pwd"]) == password
-    session[:user_id], session[:name] = user["id"], user["Name"]
+  result = login_user(email, password)
+  if result
+    session[:user_id], session[:name] = result["id"], result["Name"]
   else
     halt 401, "unauthorized"
   end
@@ -38,12 +38,10 @@ end
 
 post "/users/new" do
   email, password, username = params[:email], params[:password], params[:username]
-  db = SQLite3::Database.new("db/main.sqlite")
-  db.results_as_hash = true
   if session[:error] = verify_password(password)
     redirect "/users/new"
   end
-  db.execute("INSERT INTO users (Email, Pwd, Name) VALUES (?, ?, ?)", email, BCrypt::Password.create(password), username)
+  register_user(email, password, username)
   redirect "/login"
 end
 
@@ -57,24 +55,31 @@ get "/exercises/new" do
 end
 
 post "/exercises/new" do
-  name, description = params[:name], params[:description]
-  db = SQLite3::Database.new("db/main.sqlite")
-  db.results_as_hash = true
-  db.execute("INSERT INTO exercises (Name, Description) VALUES (?, ?)", name, description)
+  name, instructions, difficulty, test_file, icon, blurb = params[:name], params[:instructions], params[:difficulty], params[:test_file], params[:icon], params[:blurb]
+
+  icon_temp_file = icon[:tempfile]
+  icon_file_name, extension = icon[:filename].split(".")
+  icon_file_name = "#{SecureRandom.uuid}.#{extension}"
+  icon_file_path = "./public/icons/exercises/#{icon_file_name}"
+
+
+  File.write(icon_file_path, icon_temp_file.read)
+
+  test_file_content = File.read(test_file[:tempfile])
+  instructions_content = File.read(instructions[:tempfile])
+
+  new_exercise(name, instructions_content, difficulty, test_file_content, "/icons/exercises/#{icon_file_name}", blurb)
   redirect "/exercises/show"
 end
 
 get "/exercises/show" do
-  @exercises = [{name: "Diamond", image: "https://assets.exercism.org/exercises/diamond.svg", stub: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, nam. Vel delectus, dicta rem laudantium magnam."},
-                {name: "Bob", image: "https://assets.exercism.org/exercises/bob.svg", stub: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, nam. Vel delectus, dicta rem laudantium magnam.",},
-                {name: "Beer Song", image: "https://assets.exercism.org/exercises/beer-song.svg", stub: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, nam. Vel delectus, dicta rem laudantium magnam."},
-                {name: "Leap", image: "https://assets.exercism.org/exercises/leap.svg", stub: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, nam. Vel delectus, dicta rem laudantium magnam."}]
+  @exercises = fetch_exercises(10)
   erb :"exercises/show"
 end
 
 get "/exercises/:name" do
-  content = Commonmarker.to_html(File.read("./data.md"), options: {
+  @exercise = fetch_exercise(params[:name])
+  @content = Commonmarker.to_html(@exercise["Instructions"], options: {
     parse: { smart: true}, render: {unsafe: true}, extension: {header_ids: "markdown ", table: true} })
-  @exercise = {name: "Diamond", image: "https://assets.exercism.org/exercises/diamond.svg", header: "introduction", content: content}
   erb :"exercises/index"
 end

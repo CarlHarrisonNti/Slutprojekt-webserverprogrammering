@@ -5,11 +5,11 @@
 
     <div class="grid grid-cols-3 gap-4">
     <% @exercises.each do |exercise| %>
-        <a href="/exercises/<%= exercise[:name].downcase %>">
+        <a href="/exercises/<%= exercise["Name"].downcase %>">
         <section class="bg-sky-100 rounded-xl p-5 grid grid-cols-3 grid-rows-4 2xl:grid-cols-4 hover:drop-shadow-2xl cursor-pointer">
-            <img src="<%= exercise[:image]%>" alt="diamant" class="row-span-3 col-span-1 place-self-center">
-            <h2 class="row-span-3 col-span-2 2xl:col-span-3 text-center text-5xl font-semibold place-self-center"><%= exercise[:name]%></h2>
-            <p class="row-span-1 col-span-3 2xl:col-span-4"><%= exercise[:stub]%></p>
+            <img src="<%= exercise["Icon"]%>" alt="exercise-icon" class="row-span-3 col-span-1 place-self-center">
+            <h2 class="row-span-3 col-span-2 2xl:col-span-3 text-center text-5xl font-semibold place-self-center"><%= exercise["Name"]%></h2>
+            <p class="row-span-1 col-span-3 2xl:col-span-4"><%= exercise["Blurb"]%></p>
         </section>
         </a>
     <% end %>

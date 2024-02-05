@@ -2,12 +2,12 @@
     <div class="grid grid-cols-5 gap-10 p-10">
         <div class="col-span-1 flex flex-col gap-8">
         <section class="bg-sky-100 rounded-xl flex flex-col">
-            <h1 class="text-center text-5xl font-semibold place-self-center p-5"><%= @exercise[:name]%></h1>
-            <img src="<%= @exercise[:image]%>" alt="" class="place-items-center">
+            <h1 class="text-center text-5xl font-semibold place-self-center p-5"><%= @exercise["Name"]%></h1>
+            <img src="<%= @exercise["Icon"]%>" alt="" class="place-items-center">
         </section>
         <section class="bg-sky-100 rounded-xl flex flex-col">
             <h2 class="text-center text-3xl font-semibold place-self-center p-5">Submit your solution</h2>
-            <form action="/exercises/<%= @exercise[:id]%>/submit" method="POST" class="flex flex-col">
+            <form action="/exercises/<%= @exercise["Id"]%>/submit" method="POST" class="flex flex-col">
                 <input type="submit" value="Submit" class="place-self-center p-5">
         </section>
         <nav class="bg-sky-100 rounded-xl flex flex-col">
@@ -19,7 +19,9 @@
         <div class="col-span-4">
             <section class="bg-sky-100 rounded-xl">
                 <h2 class="text-center text-5xl font-semibold place-self-center"><%= @exercise[:header]%></h2>
-                <%= @exercise[:content]%>
+                <div class="markdown p-8">
+                    <%= @content %>
+                </div>
             </section>
         </div>
     </div>

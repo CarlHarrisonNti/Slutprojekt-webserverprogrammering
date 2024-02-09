@@ -46,6 +46,15 @@
     padding: 0.5rem;
 }
 
+pre code.hljs {
+    border-radius: 10px;
+    background: #2e3338
+}
+
+.hljs {
+    background: #242424
+  }
+
 .markdown ul {
     margin: 0.5rem 0rem;
     list-style-type: circle;

@@ -6,13 +6,17 @@
     <title>Document</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/ruby.min.js"></script>
+    <script>hljs.highlightAll();</script>
 </head>
 <body class="bg-indigo-800">
     <% unless request.path_info == "/login" %>
         <nav class="bg-indigo-900 flex">
             <ul class="flex p-6 space-x-4 items-apart justify-around w-2/5 m-auto text-white ">
                 <li><a href="/">Home</a></li>
-                <li><a href="/exercises/show">exercises</a></li>
+                <li><a href="/exercises">exercises</a></li>
                 <li><a href="/contact">Contact Us</a></li>
             </ul>
             <% if session[:user_id] %>

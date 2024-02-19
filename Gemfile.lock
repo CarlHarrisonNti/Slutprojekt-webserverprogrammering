@@ -3,17 +3,16 @@ GEM
   specs:
     base64 (0.2.0)
     bcrypt (3.1.20)
-    commonmarker (1.0.4)
-      rb_sys (~> 0.9)
-    commonmarker (1.0.4-aarch64-linux)
-    commonmarker (1.0.4-arm64-darwin)
-    commonmarker (1.0.4-x86_64-darwin)
-    commonmarker (1.0.4-x86_64-linux)
+    commonmarker (0.20.2)
+      ruby-enum (~> 0.5)
+    concurrent-ruby (1.2.3)
+    i18n (1.14.1)
+      concurrent-ruby (~> 1.0)
     multi_json (1.15.0)
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
     nio4r (2.7.0)
-    puma (6.4.2)
+    puma (5.5.2)
       nio4r (~> 2.0)
     rack (3.0.8)
     rack-protection (4.0.0)
@@ -24,7 +23,8 @@ GEM
     rackup (2.1.0)
       rack (>= 3)
       webrick (~> 1.8)
-    rb_sys (0.9.87)
+    ruby-enum (0.9.0)
+      i18n
     ruby2_keywords (0.0.5)
     sinatra (4.0.0)
       mustermann (~> 3.0)
@@ -56,14 +56,14 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  bcrypt
-  commonmarker
-  puma
-  rackup
-  sinatra
-  sinatra-contrib
-  sqlite3
-  webrick
+  bcrypt (~> 3.1.16)
+  commonmarker (~> 0.20.0)
+  puma (~> 5.5.2)
+  rackup (~> 2.1.0)
+  sinatra (~> 4.0.0)
+  sinatra-contrib (~> 4.0.0)
+  sqlite3 (~> 1.7.0)
+  webrick (~> 1.8.0)
 
 RUBY VERSION
    ruby 3.3.0p0

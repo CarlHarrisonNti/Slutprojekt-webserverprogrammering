@@ -31,6 +31,10 @@ def fetch_users()
   db.execute("SELECT * FROM users")
 end
 
+def update_users_roles(id, roles)
+    db = connect_to_db()
+end
+
 def login_user(email, password)
     db = connect_to_db()
     user = db.execute("SELECT * FROM users WHERE Email = ?", email).first

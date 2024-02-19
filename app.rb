@@ -48,7 +48,7 @@ get "/" do
 end
 
 get "/login" do
-  erb :"users/login"
+  erb :login
 end
 
 post "/login" do
@@ -89,13 +89,14 @@ end
 
 get "/users/:id/edit" do
   @user = fetch_user(params[:id])
-  p @user
+  @roles = fetch_roles
   erb :"users/edit"
 end
 
 post "/users/:id/update" do
-  email, password, username = params[:email], params[:password], params[:username]
+  email, password, username, roles = params[:email], params[:password], params[:username], params[:roles]
   update_user(params[:id], email, password, username)
+  update_users_roles(params[:id], roles)
   redirect "/users"
 end
 

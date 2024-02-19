@@ -9,4 +9,4 @@ gem 'sinatra-contrib', '~>4.0.0'
 gem 'webrick', '~>1.8.0'
 gem 'puma', '~>5.5.2'
 gem "rackup", "~>2.1.0"
-gem 'commonmarker', '~>0.20.0'
+gem 'commonmarker', '~>1.0.4'

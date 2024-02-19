@@ -3,5 +3,9 @@
     <div class="bg-slate-500 rounded-xl h-60 flex flex-col justify-center items-center text-3xl gap-10">
     <p> Email: <span class="bg-slate-600 p-3 rounded-xl"><%= @user["Email"] %></span></h2>
     <h2>Roles</h2>
+    <ul class="flex flex-col gap-2">
+        <% @user_roles.each do |user_role| %>
+            <li><%= user_role["Name"] %></li>
+        <% end %>
     </div>
 </div>

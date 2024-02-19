@@ -33,6 +33,15 @@ end
 
 def update_users_roles(id, roles)
     db = connect_to_db()
+    db.execute("DELETE FROM role_users WHERE user_id = ?", id)
+    roles.each do |role|
+        db.execute("INSERT INTO role_users (user_id, role_id) VALUES (?, ?)", id, role)
+    end
+end
+
+def fetch_user_roles(id)
+    db = connect_to_db()
+    db.execute("SELECT * FROM roles INNER JOIN role_users on role_users.role_id = roles.id WHERE user_id = ?", id)
 end
 
 def login_user(email, password)

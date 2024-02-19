@@ -83,13 +83,16 @@ end
 
 get "/users/:id" do
   @user = fetch_user(params[:id])
+  @user_roles = fetch_user_roles(params[:id])
+  p @user_roles
   erb :"users/show"
-
 end
 
 get "/users/:id/edit" do
   @user = fetch_user(params[:id])
   @roles = fetch_roles
+  @user_roles = fetch_user_roles(params[:id])
+  p @user_roles
   erb :"users/edit"
 end
 

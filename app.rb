@@ -39,6 +39,10 @@ helpers do
   def blurb(text)
     text.size > 100 ? text[..100] + "..." : text
   end
+
+  def max_lines(text, lines)
+    text.split("\n")[...lines].join("\n")
+  end
 end
 
 

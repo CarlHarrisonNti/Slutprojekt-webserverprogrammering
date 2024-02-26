@@ -6,8 +6,8 @@
     <div class="grid grid-cols-2 2xl:grid-cols-3 gap-4">
     <% @solutions.each do |solution| %>
         <a href="/solution/<%= solution["Id"] %>">
-        <section class="bg-sky-100 rounded-xl p-5 flex flex-col hover:drop-shadow-2xl cursor-pointer h-56">
-            <pre class="h-40"><code class="h-40" class="language-ruby"><%= solution["Solution"] %></pre></code>
+        <section class="bg-sky-100 rounded-xl p-5 flex flex-col hover:drop-shadow-2xl cursor-pointer h-64">
+            <pre class="h-48 overflow-y-hidden whitespace-pre"><code class="h-48 language-ruby overflow-y-hidden whitespace-pre"><%= max_lines(solution["Solution"], 7) %></pre></code>
             <h3><%= solution["Name"]%>'s solution</h3>
         </section>
         </a>

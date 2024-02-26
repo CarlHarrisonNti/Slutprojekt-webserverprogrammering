@@ -7,9 +7,7 @@
         </section>
         <section class="bg-sky-100 rounded-xl flex flex-col">
             <h2 class="text-center text-3xl font-semibold place-self-center p-5">Submit your solution</h2>
-            <form action="/exercises/<%= @exercise["Id"]%>/submit" method="POST" class="flex flex-col">
-                <input type="submit" value="Submit" class="place-self-center p-5">
-            </form>
+            <a class="text-center text-2xl place-self-center p-5" href="/exercises/<%= @exercise["Id"]%>/solutions/new">Link</a>
         </section>
         <nav class="bg-sky-100 rounded-xl flex flex-col">
             <h2 class="text-center text-3xl font-semibold place-self-center p-5">Sections</h2>

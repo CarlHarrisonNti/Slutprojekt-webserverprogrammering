@@ -47,6 +47,7 @@ end
 def login_user(email, password)
     db = connect_to_db()
     user = db.execute("SELECT * FROM users WHERE Email = ?", email).first
+    p user
     if BCrypt::Password.new(user["Pwd"]) == password
         user
     else
@@ -66,7 +67,7 @@ end
 
 def fetch_exercise(id)
     db = connect_to_db()
-    db.execute("SELECT * FROM exercises WHERE Id = ?", id).first
+    db.execute("SELECT * FROM exercises  WHERE Id = ?", id).first
 end
 
 def update_exercise(id, name, instructions, difficulty, test_file, icon, blurb)
@@ -102,4 +103,14 @@ end
 def update_role(id, name, level)
     db = connect_to_db()
     db.execute("UPDATE roles SET Name = ?, Level = ? WHERE Id = ?", name, level, id)
+end
+
+def fetch_solutions(id)
+    db = connect_to_db()
+    db.execute("SELECT name, solution FROM solutions INNER JOIN users on solutions.user_id = id  WHERE exercise_id = ? ", id)
+end
+
+def create_solution(user_id, exercise_id, solution)
+    db = connect_to_db()
+    db.execute("INSERT INTO solutions (exercise_id, solution, user_id) VALUES (?, ?, ?)", exercise_id, solution, user_id)
 end

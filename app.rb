@@ -53,6 +53,7 @@ end
 
 post "/login" do
   email, password = params[:email], params[:password]
+  p email, password
   result = login_user(email, password)
   if result
     session[:user_id], session[:name] = result["id"], result["Name"]
@@ -69,9 +70,12 @@ end
 
 post "/users" do
   email, password, username = params[:email], params[:password], params[:username]
-  if session[:error] = verify_password(password)
+   password_check = verify_password(password)
+  if password_check.any? {|_, value| !value }
+    session[:error] = password_check
     redirect "/users/new"
   end
+  p password
   register_user(email, password, username)
   redirect "/login"
 end
@@ -211,4 +215,23 @@ post "/roles/:id/update" do
   name, level = params[:name], params[:level]
   update_role(params[:id], name, level)
   redirect "/roles"
+end
+
+get "/exercises/:id/solutions" do
+  exercise_id = params[:id]
+  @solutions = fetch_solutions(exercise_id)
+  erb :"solutions/index"
+end
+
+get "/exercises/:id/solutions/new" do
+  @id = params[:id]
+  erb :"solutions/new"
+end
+
+post "/exercises/:id/solutions" do
+  solution_file = params[:solution_file]
+  solution = File.read(solution_file[:tempfile])
+  exercise_id = params[:id]
+  create_solution(session[:user_id], exercise_id, solution)
+  redirect "/exercises/#{exercise_id}/solutions"
 end

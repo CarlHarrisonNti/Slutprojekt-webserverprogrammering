@@ -1,0 +1,16 @@
+<div class="w-5/6 mx-auto">
+    <div class="text-center text-white m-10">
+        <h1 class="text-6xl">Solutions</h1>
+    </div>
+
+    <div class="grid grid-cols-2 2xl:grid-cols-3 gap-4">
+    <% @solutions.each do |solution| %>
+        <a href="/solution/<%= solution["Id"] %>">
+        <section class="bg-sky-100 rounded-xl p-5 flex flex-col hover:drop-shadow-2xl cursor-pointer h-56">
+            <pre class="h-40"><code class="h-40" class="language-ruby"><%= solution["Solution"] %></pre></code>
+            <h3><%= solution["Name"]%>'s solution</h3>
+        </section>
+        </a>
+    <% end %>
+    </div>
+</div>

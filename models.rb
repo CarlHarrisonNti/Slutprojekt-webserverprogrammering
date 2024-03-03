@@ -107,10 +107,15 @@ end
 
 def fetch_solutions(id)
     db = connect_to_db()
-    db.execute("SELECT name, solution FROM solutions INNER JOIN users on solutions.user_id = id  WHERE exercise_id = ? ", id)
+    db.execute("SELECT name, solution, solution_id FROM solutions INNER JOIN users on solutions.user_id = id  WHERE exercise_id = ? ", id)
 end
 
 def create_solution(user_id, exercise_id, solution)
     db = connect_to_db()
-    db.execute("INSERT INTO solutions (exercise_id, solution, user_id) VALUES (?, ?, ?)", exercise_id, solution, user_id)
+    db.execute("INSERT INTO solutions (exercise_id, Solution, user_id) VALUES (?, ?, ?)", exercise_id, solution, user_id)
+end
+
+def fetch_solution(id)
+    db = connect_to_db()
+    db.execute("SELECT * FROM solutions WHERE solution_id = ?", id).first
 end

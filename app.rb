@@ -222,9 +222,15 @@ post "/roles/:id/update" do
 end
 
 get "/exercises/:id/solutions" do
-  exercise_id = params[:id]
-  @solutions = fetch_solutions(exercise_id)
+  @exercise_id = params[:id]
+  @solutions = fetch_solutions(@exercise_id)
+  p @solutions
   erb :"solutions/index"
+end
+
+get "/exercises/:id/solutions/:solution_id" do
+  @solution = fetch_solution(params[:solution_id])
+  erb :"solutions/show"
 end
 
 get "/exercises/:id/solutions/new" do
@@ -238,4 +244,9 @@ post "/exercises/:id/solutions" do
   exercise_id = params[:id]
   create_solution(session[:user_id], exercise_id, solution)
   redirect "/exercises/#{exercise_id}/solutions"
+end
+
+post "/exercises/:id/solutions/:solution_id/delete" do
+  delete_solution(params[:solution_id])
+  redirect "/exercises/#{params[:id]}/solutions"
 end

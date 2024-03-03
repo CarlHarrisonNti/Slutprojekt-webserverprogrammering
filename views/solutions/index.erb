@@ -5,7 +5,7 @@
 
     <div class="grid grid-cols-2 2xl:grid-cols-3 gap-4">
     <% @solutions.each do |solution| %>
-        <a href="/solution/<%= solution["Id"] %>">
+        <a href="/exercises/<%= @exercise_id %>/solutions/<%= solution["solution_id"] %>">
         <section class="bg-sky-100 rounded-xl p-5 flex flex-col hover:drop-shadow-2xl cursor-pointer h-64">
             <pre class="h-48 overflow-y-hidden whitespace-pre"><code class="h-48 language-ruby overflow-y-hidden whitespace-pre"><%= max_lines(solution["Solution"], 7) %></pre></code>
             <h3><%= solution["Name"]%>'s solution</h3>

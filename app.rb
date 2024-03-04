@@ -59,8 +59,9 @@ post "/login" do
   email, password = params[:email], params[:password]
   result = login_user(email, password)
   if result
-    p "result", result  
+    p "result", result
     session[:user_id], session[:name] = result["id"], result["Name"]
+    session[:level] = fetch_user_roles(result["id"]).map {|role| role["Level"]}.max
   else
     halt 401, "unauthorized"
   end
@@ -252,7 +253,20 @@ get "/exercises/:id/solutions/:solution_id" do
   erb :"solutions/show"
 end
 
+before "/exercises/:id/edit" do
+  p "hi", fetch_user_roles(session[:user_id])
+  fetch_user_roles(session[:user_id]).map {|role| role["Level"]}.max < 4 ? halt(401, "Unauthorized") : nil
+end
+
 get "/exercises/:id/solutions/:solution_id/edit" do
   @solution = fetch_solution(params[:solution_id])
+  @id = params[:id]
   erb :"solutions/edit"
+end
+
+post "/exercises/:id/solutions/:solution_id/update" do
+  solution_file = params[:solution_file]
+  solution = File.read(solution_file[:tempfile])
+  update_solution(params[:solution_id], solution)
+  redirect "/exercises/#{params[:id]}/solutions"
 end

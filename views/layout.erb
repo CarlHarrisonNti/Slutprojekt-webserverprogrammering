@@ -22,7 +22,7 @@
             <% if session[:user_id] %>
             <div class="flex p-6 space-x-4 items-apart w-1/4 justify-around text-white" >
             <%= session[:name] %>
-            <a href="logout" class="rounded-lg bg-red-800 w-32 py-2 inline-block text-center">Logout</a>
+            <a href="/logout" class="rounded-lg bg-red-800 w-32 py-2 inline-block text-center">Logout</a>
             </div>
             <% else %>
             <ul class="flex p-6 space-x-4 items-apart w-1/4 justify-around text-white">

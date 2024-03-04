@@ -47,7 +47,6 @@ end
 def login_user(email, password)
     db = connect_to_db()
     user = db.execute("SELECT * FROM users WHERE Email = ?", email).first
-    p user
     if BCrypt::Password.new(user["Pwd"]) == password
         user
     else
@@ -123,4 +122,9 @@ end
 def delete_solution(id)
     db = connect_to_db()
     db.execute("DELETE FROM solutions WHERE solution_id = ?", id)
+end
+
+def update_solution(id, solution)
+    db = connect_to_db()
+    db.execute("UPDATE solutions SET Solution = ? WHERE solution_id = ?", solution, id)
 end

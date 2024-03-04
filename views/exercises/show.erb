@@ -19,6 +19,8 @@
                 <% end %>
             </ul>
         </nav>
+
+        <% if (session[:level] || 0) >= 4 %>
         <div  class="bg-sky-100 rounded-xl flex flex-col">
             <h2 class="text-center text-3xl font-semibold place-self-center p-5">Admin panel</h2>
             <ul class="flex flex-col">
@@ -30,6 +32,7 @@
                         <input type="submit" value="Delete" class="w-full h-full cursor-pointer hover:bg-red-400  rounded-b-xl bg-red-500">
                     </form>
         </div>
+        <% end %>
 
         </div>
         <div class="col-span-4">

@@ -117,5 +117,10 @@ end
 
 def fetch_solution(id)
     db = connect_to_db()
-    db.execute("SELECT * FROM solutions WHERE solution_id = ?", id).first
+    db.execute("SELECT * FROM solutions INNER JOIN users on solutions.user_id = id WHERE solution_id = ?", id).first
+end
+
+def delete_solution(id)
+    db = connect_to_db()
+    db.execute("DELETE FROM solutions WHERE solution_id = ?", id)
 end

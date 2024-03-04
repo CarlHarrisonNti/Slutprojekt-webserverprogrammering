@@ -1,3 +1,16 @@
-<div class="p-10 text-white flex gap-5 flex-col w-5/12 m-auto">
-    <pre class="hwhitespace-pre"><code class="language-ruby  whitespace-pre"><%= @solution["Solution"] %></pre></code>
+<div class="p-10 text-white flex gap-5 flex-col m-auto">
+    <div class="bg-slate-200 rounded-xl p-5">
+    <div class="flex justify-between">
+        <h1 class="text-black text-2xl m-5"><%= @solution["Name"] %>'s Solution</h1>
+            <div class="flex  gap-5">
+        <div class="h-16 hover:bg-yellow-400 bg-yellow-500 rounded-xl">
+        <a href="/exercises/<%= @solution["exercise_id"] %>/solutions/<%= @solution["solution_id"] %>/edit" class="w-32 h-full items-center justify-center flex">Edit</a>
+        </div>
+        <form action="/exercises/<%= @solution["exercise_id"] %>/solutions/<%= @solution["solution_id"] %>/delete" method="POST" class="w-32 h-16 flex items-center justify-center">
+            <input type="submit" value="Delete" class="w-full h-full cursor-pointer hover:bg-red-400  rounded-xl bg-red-500">
+        </form>
+    </div>
+    </div>
+    <pre class="whitespace-pre"><code class="language-ruby  whitespace-pre"><%= @solution["Solution"] %></pre></code>
+    </div>
 </div>

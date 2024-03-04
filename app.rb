@@ -57,9 +57,9 @@ end
 
 post "/login" do
   email, password = params[:email], params[:password]
-  p email, password
   result = login_user(email, password)
   if result
+    p "result", result  
     session[:user_id], session[:name] = result["id"], result["Name"]
   else
     halt 401, "unauthorized"
@@ -228,11 +228,6 @@ get "/exercises/:id/solutions" do
   erb :"solutions/index"
 end
 
-get "/exercises/:id/solutions/:solution_id" do
-  @solution = fetch_solution(params[:solution_id])
-  erb :"solutions/show"
-end
-
 get "/exercises/:id/solutions/new" do
   @id = params[:id]
   erb :"solutions/new"
@@ -242,6 +237,7 @@ post "/exercises/:id/solutions" do
   solution_file = params[:solution_file]
   solution = File.read(solution_file[:tempfile])
   exercise_id = params[:id]
+  p session[:user_id]
   create_solution(session[:user_id], exercise_id, solution)
   redirect "/exercises/#{exercise_id}/solutions"
 end
@@ -249,4 +245,14 @@ end
 post "/exercises/:id/solutions/:solution_id/delete" do
   delete_solution(params[:solution_id])
   redirect "/exercises/#{params[:id]}/solutions"
+end
+
+get "/exercises/:id/solutions/:solution_id" do
+  @solution = fetch_solution(params[:solution_id])
+  erb :"solutions/show"
+end
+
+get "/exercises/:id/solutions/:solution_id/edit" do
+  @solution = fetch_solution(params[:solution_id])
+  erb :"solutions/edit"
 end

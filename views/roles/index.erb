@@ -1,20 +1,36 @@
 <div>
-        <div class="flex justify-center">
-            <div class="w-5/6 mx-auto">
-                <div class="text-center text-white m-10">
-                    <h1 class="text-6xl">Roles</h1>
-                </div>
-                <div class="grid grid-cols-1 2xl:grid-cols-2 gap-4">
-                    <% @roles.each do |role| %>
-                    <a class="col-span-1" href="/roles/<%= role["Id"] %>">
-                        <section class="bg-sky-100 rounded-xl p-5 grid grid-cols-4 grid-rows-4 hover:drop-shadow-2xl h-56 gap-4">
-                            <h2 class="col-span-4 row-span-2 text-center text-3xl"><%= role["Name"]%></h2>
-                            <p class="col-span-2 row-span-2 bg-slate-400  rounded-xl text-center text-2xl">Level: <%= role["Level"]%></p>
-                            <p class="col-span-2 row-span-2 bg-slate-400  rounded-xl text-center text-2xl">Count: <%= role["Count"] %></p>
-                        </section>
-                    </a>
-                    <% end %>
-                </div>
-            </div>
-        </div>
+  <div class="flex justify-center">
+    <div class="w-5/6 mx-auto">
+      <div class="text-center text-white m-10">
+        <h1 class="text-6xl">Roles</h1>
+      </div>
+      <div class="flex justify-center p-5 items-center ">
+        <a
+          href="/admin/roles/new"
+          class="
+            bg-slate-300 p-3 rounded-xl w-2/5 h-24 text-center m-auto text-4xl flex
+            items-center justify-center
+          "
+        ><p>New Role</p></a>
+      </div>
+      <div class="grid grid-cols-1 2xl:grid-cols-2 gap-4">
+        <% @roles.each do |role| %>
+          <a class="col-span-1" href="/admin/roles/<%= role["Id"]%>">
+            <section
+              class="
+                bg-sky-100 rounded-xl p-5 grid grid-cols-4 grid-rows-4 hover:drop-shadow-2xl
+                h-56 gap-4
+              "
+            >
+              <h2 class="col-span-4 row-span-2 text-center text-3xl"><%= role["Name"] %></h2>
+              <p class="col-span-2 row-span-2 bg-slate-400 rounded-xl text-center text-2xl">Level:
+                <%= role["Level"] %></p>
+              <p class="col-span-2 row-span-2 bg-slate-400 rounded-xl text-center text-2xl">Count:
+                <%= role_count(role["Id"]) %></p>
+            </section>
+          </a>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,20 +1,44 @@
 <div class="w-5/6 mx-auto">
-    <div class="text-center text-white m-10">
-        <h1 class="text-6xl">Exercises</h1>
+  <div class="text-center text-white m-10">
+    <h1 class="text-6xl">Exercises</h1>
+  </div>
+  <% if (session[:level] || 0 ) >= 3 %>
+    <div class="flex justify-center m-10 items-center">
+      <a href="/protected/exercises/new" class="rounded-lg bg-indigo-300 py-2 justify-center flex items-center text-center h-16 w-2/5 text-2xl"><span>New</span></a>
     </div>
+  <% end %>
 
-    <div class="grid grid-cols-2 2xl:grid-cols-3 gap-4">
+  <div class="grid grid-cols-2 2xl:grid-cols-3 gap-4">
     <% @exercises.sort_by {|x| x["Difficulty"]}.each do |exercise| %>
-        <a href="/exercises/<%= exercise["Id"] %>">
-        <section class="bg-sky-100 rounded-xl p-5 grid grid-cols-4 grid-rows-4 2xl:grid-cols-5 hover:drop-shadow-2xl cursor-pointer h-56">
-            <img src="<%= exercise["Icon"]%>" alt="exercise-icon" class="row-span-3 col-span-1 place-self-center">
-            <h2 class="row-span-3 col-span-3 2xl:col-span-3 text-center text-5xl font-semibold place-self-center"><%= exercise["Name"]%></h2>
-            <p class="row-span-1 col-span-3 2xl:col-span-4"><%= blurb(exercise["Blurb"])%></p>
-            <div class="flex justify-center col-span-1 items-center w-18 h-10 rounded-2xl bg-<%=exercise_color(exercise["Difficulty"])%>-500">
-                <p class=" text-center"><%= exercise_difficulty(exercise["Difficulty"]) %></p>
-            </div>
+      <a href="/exercises/<%= exercise["Id"] %>">
+        <section
+          class="
+            bg-sky-100 rounded-xl p-5 grid grid-cols-4 grid-rows-4 2xl:grid-cols-5
+            hover:drop-shadow-2xl cursor-pointer h-56
+          "
+        >
+          <img
+            src="<%= exercise["Icon"]%>"
+            alt="exercise-icon"
+            class="row-span-3 col-span-1 place-self-center"
+          >
+          <h2
+            class="
+              row-span-3 col-span-3 2xl:col-span-3 text-center text-5xl font-semibold
+              place-self-center
+            "
+          ><%= exercise["Name"] %></h2>
+          <p class="row-span-1 col-span-3 2xl:col-span-4"><%= blurb(exercise["Blurb"]) %></p>
+          <div
+            class="
+              flex justify-center col-span-1 items-center w-18 h-10 rounded-2xl
+              bg-<%=exercise_color(exercise["Difficulty"])%>-500
+            "
+          >
+            <p class=" text-center"><%= exercise_difficulty(exercise["Difficulty"]) %></p>
+          </div>
         </section>
-        </a>
+      </a>
     <% end %>
-    </div>
+  </div>
 </div>

@@ -11,6 +11,11 @@ def register_user(email, password, username)
   db.execute("INSERT INTO users (Email, Pwd, Name) VALUES (?, ?, ?)", email, BCrypt::Password.create(password), username)
 end
 
+def fetch_users()
+  db = connect_to_db()
+  db.execute("SELECT * FROM users")
+end
+
 def fetch_user(id)
   db = connect_to_db()
   db.execute("SELECT * FROM users WHERE Id = ?", id).first
@@ -24,11 +29,6 @@ end
 def delete_user(id)
   db = connect_to_db()
   db.execute("DELETE FROM users WHERE Id = ?", id)
-end
-
-def fetch_users()
-  db = connect_to_db()
-  db.execute("SELECT * FROM users")
 end
 
 def update_users_roles(id, roles)
@@ -47,11 +47,6 @@ end
 def login_user(email, password)
     db = connect_to_db()
     user = db.execute("SELECT * FROM users WHERE Email = ?", email).first
-    if BCrypt::Password.new(user["Pwd"]) == password
-        user
-    else
-        nil
-    end
 end
 
 def new_exercise(name, instructions, difficulty, test_file, icon, blurb)
@@ -82,6 +77,11 @@ end
 def fetch_roles()
     db = connect_to_db()
     db.execute("SELECT * FROM roles")
+end
+
+def fetch_role_count(id)
+    db = connect_to_db()
+    db.execute("SELECT * FROM role_users WHERE role_id = ?", id).length
 end
 
 def fetch_role_and_users(id)
@@ -115,6 +115,11 @@ def create_solution(user_id, exercise_id, solution)
 end
 
 def fetch_solution(id)
+    db = connect_to_db()
+    db.execute("SELECT * FROM solutions WHERE solution_id = ?", id).first
+end
+
+def fetch_solution_and_users(id)
     db = connect_to_db()
     db.execute("SELECT * FROM solutions INNER JOIN users on solutions.user_id = id WHERE solution_id = ?", id).first
 end

@@ -1,38 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/css/output.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/ruby.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.css"
+    >
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/ruby.min.js"
+    ></script>
     <script>hljs.highlightAll();</script>
-</head>
-<body class="bg-indigo-800">
+  </head>
+  <body class="bg-indigo-800">
     <% unless request.path_info == "/login" %>
-        <nav class="bg-indigo-900 flex">
-            <ul class="flex p-6 space-x-4 items-apart justify-around w-2/5 m-auto text-white ">
-                <li><a href="/">Home</a></li>
-                <li><a href="/exercises">exercises</a></li>
-                <li><a href="/contact">Contact Us</a></li>
-            </ul>
-            <% if session[:user_id] %>
-            <div class="flex p-6 space-x-4 items-apart w-1/4 justify-around text-white" >
-            <%= session[:name] %>
-            <a href="/logout" class="rounded-lg bg-red-800 w-32 py-2 inline-block text-center">Logout</a>
-            </div>
-            <% else %>
-            <ul class="flex p-6 space-x-4 items-apart w-1/4 justify-around text-white">
-                <li><a class="rounded-lg border-2 w-32 py-2 inline-block text-center" href="/login">Login</a></li>
-                <li><a class="rounded-lg bg-violet-700 w-32 py-2 inline-block text-center" href="/users/new">Register</a></li>
-            </ul>
-            <% end %>
-        </nav>
+      <nav class="bg-indigo-900 flex">
+        <ul
+          class="
+            flex p-6 space-x-4 items-apart justify-around w-2/5 m-auto text-white
+          "
+        >
+          <li><a href="/">Home</a></li>
+          <li><a href="/exercises">exercises</a></li>
+          <% if (session[:level] || 0 ) >= 4 %>
+            <li><a href="/admin/roles">Roles</a></li>
+            <li><a href="/admin/users">Users</a></li>
+          <% end %>
+        </ul>
+        <% if session[:user_id] %>
+          <div class="flex p-6 space-x-4 items-apart w-1/4 justify-around text-white">
+            <p><%= session[:name] %></p>
+            <a
+              href="/logout"
+              class="rounded-lg bg-red-800 w-32 py-2 inline-block text-center"
+            >Logout</a>
+          </div>
+        <% else %>
+          <ul class="flex p-6 space-x-4 items-apart w-1/4 justify-around text-white">
+            <li><a class="rounded-lg border-2 w-32 py-2 inline-block text-center" href="/login">Login</a></li>
+            <li><a
+                class="
+                  rounded-lg bg-violet-700 w-32 py-2 inline-block text-center
+                "
+                href="/users/new"
+              >Register</a></li>
+          </ul>
+        <% end %>
+      </nav>
     <% end %>
     <hr class="border-slate-400 border-2">
     <%= yield %>
-</body>
+  </body>
 </html>

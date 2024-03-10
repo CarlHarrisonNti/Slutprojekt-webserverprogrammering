@@ -1,10 +1,27 @@
 <div class="p-10 text-white flex gap-5 flex-col w-5/12 m-auto">
-    <h1 class="text-5xl text-center "><%= @role["Name"] %></h1>
-    <div class="bg-slate-500 rounded-xl h-96 flex flex-col justify-center items-center text-3xl gap-10">
-    <p> Level: <span class="bg-slate-600 p-3 rounded-xl"><%= @role["Level"] %></span></h2>
+  <h1 class="text-5xl text-center "><%= @role["Name"] %></h1>
+  <div
+    class="
+      bg-slate-500 rounded-xl p-10 flex flex-col justify-center items-center text-3xl
+      gap-10
+    "
+  >
+    <div class="flex w-full justify-around">
+      <a
+        href="/admin/roles/<%= @role["Id"] %>/edit"
+        class="bg-yellow-500 p-3 rounded-xl w-2/5 text-center"
+      >Edit</a>
+      <a
+        href="/admin/roles/<%= @role["Id"] %>/delete"
+        class="bg-red-800 p-3 rounded-xl w-2/5 text-center"
+      >Delete</a>
+    </div>
+    <h2>
+      Level:
+      <span class="bg-slate-600 p-3 rounded-xl"><%= @role["Level"] %></span></h2>
     <h2>Users:</h2>
     <% @users.each do |user| %>
-        <a href="/users/<%= user["user_id"] %>"><span class="bg-slate-600 p-3 rounded-xl"><%= user["Name"] %></span></a>
+      <a href="/admin/users/<%= user["user_id"] %>"><span class="bg-slate-600 p-3 rounded-xl"><%= user["Name"] %></span></a>
     <% end %>
-    </div>
+  </div>
 </div>

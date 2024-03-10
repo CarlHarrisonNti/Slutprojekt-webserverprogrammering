@@ -1,47 +1,68 @@
 <div class="w-5/6 mx-auto">
-    <div class="grid grid-cols-5 gap-10 p-10">
-        <div class="col-span-1 flex flex-col gap-8">
-        <section class="bg-sky-100 rounded-xl flex flex-col">
-            <h1 class="text-center text-5xl font-semibold place-self-center p-5"><%= @exercise["Name"]%></h1>
-            <img src="<%= @exercise["Icon"]%>" alt="" class="place-items-center">
-        </section>
-        <section class="bg-sky-100 rounded-xl flex flex-col">
-            <h2 class="text-center text-3xl font-semibold place-self-center p-5">Submit your solution</h2>
-            <a class="text-center text-2xl place-self-center p-5" href="/exercises/<%= @exercise["Id"]%>/solutions/new">Link</a>
-        </section>
-        <nav class="bg-sky-100 rounded-xl flex flex-col">
-            <h2 class="text-center text-3xl font-semibold place-self-center p-5">Sections</h2>
-            <ul class="flex flex-col">
-                <% SECTIONS.each do |section| %>
-                    <li class="h-16 hover:bg-gray-300 hover:rounded-xl">
-                        <a class="w-full h-full items-center justify-center flex" href="/exercises/<%= @exercise["Id"]%>/<%= section%>"><span class="text-center text-xl"><%= section.capitalize %></span></a>
-                    </li>
-                <% end %>
-            </ul>
-        </nav>
+  <div class="grid grid-cols-5 gap-10 p-10">
+    <div class="col-span-1 flex flex-col gap-8">
+      <section class="bg-sky-100 rounded-xl flex flex-col">
+        <h1 class="text-center text-5xl font-semibold place-self-center p-5"><%= @exercise["Name"] %></h1>
+        <img src="<%= @exercise["Icon"]%>" alt="" class="place-items-center">
+      </section>
+      <section class="bg-sky-100 rounded-xl flex flex-col">
+        <h2 class="text-center text-3xl font-semibold place-self-center p-5">Submit your solution</h2>
+        <a
+          class="text-center text-2xl place-self-center p-5"
+          href="/private/exercises/<%= @exercise["Id"]%>/solutions/new"
+        >Upload</a>
+      </section>
+      <nav class="bg-sky-100 rounded-xl flex flex-col">
+        <h2 class="text-center text-3xl font-semibold place-self-center p-5">Sections</h2>
+        <ul class="flex flex-col">
+          <% SECTIONS.each do |section| %>
+            <li class="h-16 hover:bg-gray-300 hover:rounded-xl">
+              <a
+                class="w-full h-full items-center justify-center flex"
+                href="/exercises/<%= @exercise["Id"]%>/<%= section%>"
+              ><span class="text-center text-xl"><%= section.capitalize %></span></a>
+            </li>
+          <% end %>
+        </ul>
+      </nav>6
 
-        <% if (session[:level] || 0) >= 4 %>
-        <div  class="bg-sky-100 rounded-xl flex flex-col">
-            <h2 class="text-center text-3xl font-semibold place-self-center p-5">Admin panel</h2>
-            <ul class="flex flex-col">
-                <li class="h-16 hover:bg-yellow-400 bg-yellow-500 ">
-                    <a class="w-full h-full items-center justify-center flex" href="/exercises/<%= @exercise["Id"]%>/edit"><span class="text-center text-xl">Edit</span></a>
-                </li>
-                <li class="h-16">
-                    <form action="/exercises/<%= @exercise["Id"]%>/delete" method="POST" class="w-full h-full flex items-center justify-center ">
-                        <input type="submit" value="Delete" class="w-full h-full cursor-pointer hover:bg-red-400  rounded-b-xl bg-red-500">
-                    </form>
+      <% if (session[:level] || 0) >= 4 %>
+        <div class="bg-sky-100 rounded-xl flex flex-col">
+          <h2 class="text-center text-3xl font-semibold place-self-center p-5">Admin panel</h2>
+          <ul class="flex flex-col">
+            <li class="h-16 hover:bg-yellow-400 bg-yellow-500 ">
+              <a
+                class="w-full h-full items-center justify-center flex"
+                href="/protected/exercises/<%= @exercise["Id"]%>/edit"
+              ><span class="text-center text-xl">Edit</span></a>
+            </li>
+            <li class="h-16">
+              <form
+                action="/protected/exercises/<%= @exercise["Id"]%>/delete"
+                method="POST"
+                class="w-full h-full flex items-center justify-center"
+              >
+                <input
+                  type="submit"
+                  value="Delete"
+                  class="
+                    w-full h-full cursor-pointer hover:bg-red-400 rounded-b-xl bg-red-500
+                  "
+                >
+              </form>
+            </li>
+          </ul>
         </div>
-        <% end %>
+      <% end %>
 
-        </div>
-        <div class="col-span-4">
-            <section class="bg-sky-100 rounded-xl">
-                <h2 class="text-center text-5xl font-semibold place-self-center"><%= @exercise[:header]%></h2>
-                <div class="markdown p-8">
-                    <%= @content %>
-                </div>
-            </section>
-        </div>
     </div>
+    <div class="col-span-4">
+      <section class="bg-sky-100 rounded-xl">
+        <h2 class="text-center text-5xl font-semibold place-self-center"><%= @exercise[:header] %></h2>
+        <div class="markdown p-8">
+          <%= @content %>
+        </div>
+      </section>
+    </div>
+  </div>
 </div>

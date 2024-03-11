@@ -1,36 +1,65 @@
 require 'sqlite3'
 
+# Connect to the database
+# @return [SQLite3::Database] the database
 def connect_to_db()
   db = SQLite3::Database.new("db/main.sqlite")
   db.results_as_hash = true
   db
 end
 
+# Register a new user
+# @param email [String] the email of the user
+# @param password [String] the password of the user
+# @param username [String] the username of the user
+# @return [nil]
 def register_user(email, password, username)
   db = connect_to_db()
   db.execute("INSERT INTO users (Email, Pwd, Name) VALUES (?, ?, ?)", email, BCrypt::Password.create(password), username)
 end
 
+# Fetch all users
+# @return [Array<Hash>] all users
 def fetch_users()
   db = connect_to_db()
   db.execute("SELECT * FROM users")
 end
 
+# Fetch a user
+# @param id [Integer] the id of the user
+# @return [Hash] the user
 def fetch_user(id)
   db = connect_to_db()
   db.execute("SELECT * FROM users WHERE Id = ?", id).first
 end
 
+# Update a user
+# @param id [Integer] the id of the user
+# @param email [String] the email of the user
+# @param password [String] the password of the user
+# @param username [String] the username of the user
+# @return [nil]
 def update_user(id, email, password, username)
   db = connect_to_db()
   db.execute("UPDATE users SET Email = ?, Pwd = ?, Name = ? WHERE Id = ?", email, BCrypt::Password.create(password), username, id)
 end
 
+# Delete a user
+# @param id [Integer] the id of the user
+# @return [nil]
 def delete_user(id)
   db = connect_to_db()
   db.execute("DELETE FROM users WHERE Id = ?", id)
 end
 
+# Update a user's roles
+#
+# It will delete all roles of the user and then add the new roles
+# This is to avoid duplicates and to make sure the roles are up to date
+#
+# @param id [Integer] the id of the user
+# @param roles [Array] the roles of the user
+# @return [nil]
 def update_users_roles(id, roles)
     db = connect_to_db()
     db.execute("DELETE FROM role_users WHERE user_id = ?", id)

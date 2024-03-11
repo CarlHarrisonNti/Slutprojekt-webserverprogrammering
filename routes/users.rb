@@ -74,6 +74,8 @@ end
 # @todo use only one query to fetch user and user roles
 # @see Model#fetch_user
 # @see Model#fetch_user_roles
+#
+# @param :id [Integer] the id of the user
 get "/admin/users/:id" do
   @user = fetch_user(params[:id])
   @user_roles = fetch_user_roles(params[:id])
@@ -81,18 +83,30 @@ get "/admin/users/:id" do
   erb :"users/show"
 end
 
-# 
+# Page to edit a user
+#
+# @see Model#fetch_user
+# @see Model#fetch_roles
+# @see Model#fetch_user_roles
+#
+# @param :id [Integer] the id of the user
 get "/admin/users/:id/edit" do
   @user = fetch_user(params[:id])
   @roles = fetch_roles
   @user_roles = fetch_user_roles(params[:id])
-  p @user_roles
   erb :"users/edit"
 end
 
-# Page where admins can see all quizzes in database
+# Update a user
 #
-# @see Model#fetch_quizzes
+# @see Model#update_user
+# @see Model#update_users_roles
+#
+# @param :id [Integer] the id of the user
+# @param :email [String] the email of the user
+# @param :password [String] the password of the user
+# @param :username [String] the username of the user
+# @param :roles [Array] the roles of the user
 post "/admin/users/:id/update" do
   email, password, username, roles = params[:email], params[:password], params[:username], params[:roles]
   update_user(params[:id], email, password, username)
@@ -100,17 +114,16 @@ post "/admin/users/:id/update" do
   redirect "/users"
 end
 
-# Page where admins can see all quizzes in database
-#
-# @see Model#fetch_quizzes
+# Delete a user
+# The route will redirect to /users
+# @see Model#delete_user
 post "/admin/users/:id/delete" do
   delete_user(params[:id])
   redirect "/users"
 end
 
-# Page where admins can see all quizzes in database
-#
-# @see Model#fetch_quizzes
+# Logout a user
+# The route will redirect to / and destroy the session
 get "/logout" do
   session.destroy
   redirect "/"

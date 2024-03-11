@@ -1,3 +1,5 @@
+require_relative "../handlers.rb"
+
 # Login a user
 #
 # @param :email [String] the email of the user
@@ -38,6 +40,8 @@ post "/login" do
   redirect "/"
 end
 
+
+# Page where you can register a new user
 get "/users/new" do
   erb :"users/new"
 end
@@ -59,17 +63,17 @@ post "/users" do
   redirect "/login"
 end
 
-# Page where admins can see all quizzes in database
-#
-# @see Model#fetch_quizzes
+# Page where admins can see all users in database
+# @see Model#fetch_users
 get "/admin/users" do
   @users = fetch_users
   erb :"users/index"
 end
 
-# Page where admins can see all quizzes in database
-#
-# @see Model#fetch_quizzes
+# Page where admins can see individual user in database
+# @todo use only one query to fetch user and user roles
+# @see Model#fetch_user
+# @see Model#fetch_user_roles
 get "/admin/users/:id" do
   @user = fetch_user(params[:id])
   @user_roles = fetch_user_roles(params[:id])
@@ -77,9 +81,7 @@ get "/admin/users/:id" do
   erb :"users/show"
 end
 
-# Page where admins can see all quizzes in database
-#
-# @see Model#fetch_quizzes
+# 
 get "/admin/users/:id/edit" do
   @user = fetch_user(params[:id])
   @roles = fetch_roles

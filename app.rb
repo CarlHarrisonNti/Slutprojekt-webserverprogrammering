@@ -4,7 +4,6 @@ require "sqlite3"
 require "bcrypt"
 require 'commonmarker'
 require "securerandom"
-require_relative "handlers.rb"
 require_relative "models.rb"
 require 'better_errors'
 require 'binding_of_caller'
@@ -65,19 +64,13 @@ get "/" do
   erb :index
 end
 
-# Page where admins can see all quizzes in database
-#
-# @see Model#fetch_quizzes
 before "/admin/*" do
   verified = (session[:level] || 0) < 4 && !session[:user_id]
   verified ? halt(401, "Unauthorized") : nil
 end
 
-# Page where admins can see all quizzes in database
-#
-# @see Model#fetch_quizzes
+
 before "/protected/*" do
   verified = (session[:level] || 0) < 3 && !session[:user_id]
   verified ? halt(401, "Unauthorized") : nil
-
 end

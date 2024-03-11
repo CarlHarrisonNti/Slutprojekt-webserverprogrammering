@@ -14,3 +14,5 @@ gem 'commonmarker', '~>1.0.4'
 gem "yard", "0.9.34"
 
 gem "yard-sinatra", git: 'https://github.com/chrisb/yard-sinatra'
+gem "better_errors", "~> 2.10"
+gem "binding_of_caller", "~> 1.0"

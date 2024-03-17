@@ -133,6 +133,11 @@ def update_role(id, name, level)
     db.execute("UPDATE roles SET Name = ?, Level = ? WHERE Id = ?", name, level, id)
 end
 
+def delete_role(id)
+    db = connect_to_db()
+    db.execute("DELETE FROM roles WHERE Id = ?", id)
+end
+
 def fetch_solutions(id)
     db = connect_to_db()
     db.execute("SELECT name, solution, solution_id FROM solutions INNER JOIN users on solutions.user_id = id  WHERE exercise_id = ? ", id)

@@ -125,7 +125,7 @@ Om eleven har ett inloggningssystem kontrollerar hen åtminstone någon get-rout
 
 ### C-nivå
 
-Eleven har ett inloggningssystem, med hashade lösenord i databasen. Eleven säkrar upp routes (både `get` och `post` (både inloggning och att användaren "äger" resursen)
+Eleven har ett inloggningssystem, med hashade lösenord i databasen. Eleven säkrar upp routes (både `get` och `post` (både inloggning och att användaren "äger" resursen))
 
 Eleven validerar och escapar användarinput
 

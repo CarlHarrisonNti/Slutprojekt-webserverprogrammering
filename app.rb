@@ -55,6 +55,20 @@ helpers do
   end
 end
 
+def create_file(path, content, file_name)
+  extension = file_name.split(".").last
+  new_file_name = "#{SecureRandom.uuid}.#{extension}"
+  file_path = "./public/#{path}/#{new_file_name}"
+  File.write(file_path, content)
+  new_file_name
+end
+
+def delete_files(*paths)
+  p paths
+  paths.each do |path|
+    File.delete(path) if File.exist?(path)
+  end
+end
 
 # Page where admins can see all quizzes in database
 #

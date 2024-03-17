@@ -1,29 +1,34 @@
-# Page where admins can see all quizzes in database
+# Starting page for all solutions
 #
-# @see Model#fetch_quizzes
+# @see Model#fetch_solutions
+#
+# @param :id [Integer] the id of the exercise
 get "/exercises/:id/solutions" do
   @exercise_id = params[:id]
   @solutions = fetch_solutions(@exercise_id)
-  p @solutions
   erb :"solutions/index"
 end
 
-# Page where admins can see all quizzes in database
-#
-# @see Model#fetch_quizzes
+# Page to create a new solution
 get "/private/exercises/:id/solutions/new" do
   @id = params[:id]
   erb :"solutions/new"
 end
 
-# Page where admins can see all quizzes in database
+# Route to create a new solution
+# It will redirect to /exercises/:id/solutions
 #
-# @see Model#fetch_quizzes
+# @see Model#create_solution
+#
+# @param :id [Integer] the id of the exercise
+# @param :solution_file [File] the file with the solution
 post "/private/exercises/:id/solutions" do
   solution_file = params[:solution_file]
-  solution = File.read(solution_file[:tempfile])
+  solution_temp_file = solution_file[:tempfile]
+
+  solution = "public/solution/#{create_file("solution", solution_temp_file.read, solution_file[:filename])}"
+
   exercise_id = params[:id]
-  p session[:user_id]
   create_solution(session[:user_id], exercise_id, solution)
   redirect "/exercises/#{exercise_id}/solutions"
 end

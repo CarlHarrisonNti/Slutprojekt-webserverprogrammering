@@ -84,11 +84,15 @@ get "/" do
   erb :index
 end
 
+# Before-block for admin pages
+# If the user is not of level 4 or higher, they will be given a 401 error
 before "/admin/*" do
   verified = (session[:level] || 0) < 4 && !session[:user_id]
   verified ? halt(401, "Unauthorized") : nil
 end
 
+# Before-block for protected pages
+# If the user is not of level 3 or higher, they will be given a 401 error
 before "/protected/*" do
   verified = (session[:level] || 0) < 3 && !session[:user_id]
   verified ? halt(401, "Unauthorized") : nil

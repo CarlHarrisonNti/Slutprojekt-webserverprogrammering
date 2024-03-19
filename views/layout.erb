@@ -20,7 +20,7 @@
   </head>
   <body class="bg-indigo-800">
     <% if flash[:notice] %>
-      <p class="notice"><%=flash[:notice]%></p>
+      <p class="notice"><%= flash[:notice] %></p>
     <% end %>
 
     <% unless request.path_info == "/login" %>

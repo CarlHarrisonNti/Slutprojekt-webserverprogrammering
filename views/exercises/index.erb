@@ -4,7 +4,13 @@
   </div>
   <% if (session[:level] || 0 ) >= 3 %>
     <div class="flex justify-center m-10 items-center">
-      <a href="/protected/exercises/new" class="rounded-lg bg-indigo-300 py-2 justify-center flex items-center text-center h-16 w-2/5 text-2xl"><span>New</span></a>
+      <a
+        href="/protected/exercises/new"
+        class="
+          rounded-lg bg-indigo-300 py-2 justify-center flex items-center text-center h-16
+          w-2/5 text-2xl
+        "
+      ><span>New</span></a>
     </div>
   <% end %>
 

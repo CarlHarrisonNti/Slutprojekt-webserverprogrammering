@@ -151,16 +151,23 @@ module Modules
     db.execute("DELETE FROM exercises WHERE Id = ?", id)
   end
 
+  # Fetch all roles
   def fetch_roles()
     db = connect_to_db()
     db.execute("SELECT * FROM roles")
   end
 
+  # Fetch the number of users with a role
+  #
+  # @param id [Integer] the id of the role
   def fetch_role_count(id)
     db = connect_to_db()
     db.execute("SELECT * FROM role_users WHERE role_id = ?", id).length
   end
 
+  # Fetch all users with a role
+  #
+  # @param id [Integer] the id of the role
   def fetch_role_and_users(id)
     db = connect_to_db()
     db.execute(
@@ -168,26 +175,44 @@ module Modules
     )
   end
 
+  # Fetch a role
+  #
+  # @param id [Integer] the id of the role
   def fetch_role(id)
     db = connect_to_db()
     db.execute("SELECT * FROM roles WHERE Id = ?", id).first
   end
 
+  # Create a new role
+  # 
+  # @param name [String] the name of the role
+  # @param level [Integer] the level of the role
   def new_role(name, level)
     db = connect_to_db()
     db.execute("INSERT INTO roles (Name, Level) VALUES (?, ?)", name, level)
   end
 
+  # Update a role
+  #
+  # @param id [Integer] the id of the role
+  # @param name [String] the name of the role
+  # @param level [Integer] the level of the role
   def update_role(id, name, level)
     db = connect_to_db()
     db.execute("UPDATE roles SET Name = ?, Level = ? WHERE Id = ?", name, level, id)
   end
 
+  # Delete a role
+  #
+  # @param id [Integer] the id of the role
   def delete_role(id)
     db = connect_to_db()
     db.execute("DELETE FROM roles WHERE Id = ?", id)
   end
 
+  # Fetch all solutions for a specific exercise
+  # 
+  # @param id [Integer] the id of the exercise
   def fetch_solutions(id)
     db = connect_to_db()
     db.execute(
@@ -195,27 +220,45 @@ module Modules
     )
   end
 
+  # Create a new solution
+  #
+  # @param user_id [Integer] the id of the user
+  # @param exercise_id [Integer] the id of the exercise
+  # @param solution [String] the solution
   def create_solution(user_id, exercise_id, solution)
     db = connect_to_db()
     db.execute("INSERT INTO solutions (exercise_id, Solution, user_id) VALUES (?, ?, ?)", exercise_id, solution,
                user_id)
   end
 
+  # Fetch a solution
+  #
+  # @param id [Integer] the id of the solution
   def fetch_solution(id)
     db = connect_to_db()
     db.execute("SELECT * FROM solutions WHERE solution_id = ?", id).first
   end
 
+  # Fetch a solution and the user who created it
+  #
+  # @param id [Integer] the id of the solution
   def fetch_solution_and_users(id)
     db = connect_to_db()
     db.execute("SELECT * FROM solutions INNER JOIN users on solutions.user_id = id WHERE solution_id = ?", id).first
   end
 
+  # Delete a solution
+  #
+  # @param id [Integer] the id of the solution
   def delete_solution(id)
     db = connect_to_db()
     db.execute("DELETE FROM solutions WHERE solution_id = ?", id)
   end
 
+  # Update a solution
+  #
+  # @param id [Integer] the id of the solution
+  # @param solution [String] the solution
   def update_solution(id, solution)
     db = connect_to_db()
     db.execute("UPDATE solutions SET Solution = ? WHERE solution_id = ?", solution, id)

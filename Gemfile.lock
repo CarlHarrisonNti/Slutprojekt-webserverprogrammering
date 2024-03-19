@@ -85,7 +85,7 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     webrick (1.8.1)
-    yard (0.9.34)
+    yard (0.9.36)
 
 PLATFORMS
   aarch64-linux
@@ -107,7 +107,7 @@ DEPENDENCIES
   sinatra-flash (~> 0.3.0)
   sqlite3 (~> 1.7.0)
   webrick (~> 1.8.0)
-  yard (= 0.9.34)
+  yard (= 0.9.36)
   yard-sinatra!
 
 RUBY VERSION

@@ -43,7 +43,7 @@
       <input
         type="file"
         id="instructions"
-        value="<%= @exercise["Instructions"] %>"
+        accept=".md"
         name="instructions"
         class="
           border-2 bg-white my-2 border-indigo-900 rounded-lg w-64 p-2 file:mr-4 file:py-2
@@ -59,7 +59,7 @@
         type="file"
         id="test_file"
         name="test_file"
-        value="<%= @exercise["Test_File"] %>"
+        accept=".rb"
         class="
           border-2 bg-white my-2 border-indigo-900 rounded-lg w-64 p-2 file:mr-4 file:py-2
           file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold
@@ -73,7 +73,7 @@
       <input
         type="file"
         id="icon"
-        value="<%= @exercise["Icon"] %>"
+        accept=".png, .jpg, .jpeg, .gif, .svg"
         name="icon"
         class="
           border-2 bg-white my-2 border-indigo-900 rounded-lg w-64 p-2 file:mr-4 file:py-2

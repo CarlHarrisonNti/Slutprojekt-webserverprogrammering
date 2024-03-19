@@ -19,6 +19,10 @@
     <script>hljs.highlightAll();</script>
   </head>
   <body class="bg-indigo-800">
+    <% if flash[:notice] %>
+      <p class="notice"><%=flash[:notice]%></p>
+    <% end %>
+
     <% unless request.path_info == "/login" %>
       <nav class="bg-indigo-900 flex">
         <ul

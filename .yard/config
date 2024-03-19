@@ -1,3 +1,0 @@
-load_plugins: true
-autoload_plugins:
-  - yard-sinatra

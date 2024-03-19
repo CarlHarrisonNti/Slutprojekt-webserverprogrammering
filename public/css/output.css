@@ -963,6 +963,20 @@ video {
   font-size: 1.5rem;
 }
 
+.notice {
+  background:rgba(25, 24, 24, 0.1);
+  border-radius: 10px;
+  width:350px;
+  padding:10px;
+  position: fixed; 
+  color: white;
+  font-size:1.5rem;
+  font-family:Arial, Helvetica, sans-serif;
+  bottom: 10px;
+  right:10px;
+  height: 100px;
+}
+
 .markdown > h4 {
   font-size: 1.25rem;
 }

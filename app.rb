@@ -11,7 +11,9 @@ require_relative 'routes/users.rb'
 require_relative 'routes/roles.rb'
 require_relative 'routes/exercises.rb'
 require_relative 'routes/solutions.rb'
+require 'sinatra/flash'
 
+include Modules
 include Verfiers
 use BetterErrors::Middleware
 
@@ -55,6 +57,11 @@ helpers do
   end
 end
 
+# Method to create a new file
+#
+# @param path [String] the path to the file directory
+# @param content [String] the content of the file
+# @param file_name [String] the name of the file
 def create_file(path, content, file_name)
   extension = file_name.split(".").last
   new_file_name = "#{SecureRandom.uuid}.#{extension}"
@@ -63,18 +70,17 @@ def create_file(path, content, file_name)
   new_file_name
 end
 
+# Method to delete multiple files
+#
+# @param paths [Array] the paths to the
 def delete_files(*paths)
-  p paths
   paths.each do |path|
     File.delete(path) if File.exist?(path)
   end
 end
 
-# Page where admins can see all quizzes in database
-#
-# @see Model#fetch_quizzes
+# Landing page
 get "/" do
-  p session[:user_id]
   erb :index
 end
 
@@ -82,7 +88,6 @@ before "/admin/*" do
   verified = (session[:level] || 0) < 4 && !session[:user_id]
   verified ? halt(401, "Unauthorized") : nil
 end
-
 
 before "/protected/*" do
   verified = (session[:level] || 0) < 3 && !session[:user_id]

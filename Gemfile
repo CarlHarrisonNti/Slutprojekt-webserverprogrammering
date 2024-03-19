@@ -11,7 +11,7 @@ gem 'puma', '~>5.5.2'
 gem "rackup", "~>2.1.0"
 gem 'commonmarker', '~>1.0.4'
 
-gem "yard", "0.9.34"
+gem "yard", "0.9.36"
 
 gem "yard-sinatra", git: 'https://github.com/chrisb/yard-sinatra'
 gem "better_errors", "~> 2.10"

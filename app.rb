@@ -62,6 +62,8 @@ end
 # @param path [String] the path to the file directory
 # @param content [String] the content of the file
 # @param file_name [String] the name of the file
+#
+# @return [String] the path of the full path
 def create_file(path, content, file_name)
   extension = file_name.split(".").last
   new_file_name = "#{SecureRandom.uuid}.#{extension}"
@@ -73,6 +75,8 @@ end
 # Method to delete multiple files
 #
 # @param paths [Array] the paths to the
+# 
+# @return [Array] the paths to the files that were deleted
 def delete_files(*paths)
   paths.each do |path|
     File.delete(path) if File.exist?(path)

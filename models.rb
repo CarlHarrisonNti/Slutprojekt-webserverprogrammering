@@ -136,6 +136,8 @@ module Modules
   # @param test_file [String] the path to test file of the exercise
   # @param icon [String] the path to icon of the exercise
   # @param blurb [String] the blurb of the exercise
+  #
+  # @return [nil]
   def update_exercise(id, name, instructions, difficulty, test_file, icon, blurb)
     db = connect_to_db()
     db.execute(
@@ -146,12 +148,16 @@ module Modules
   # Delete an exercise
   #
   # @param id [Integer] the id of the exercise
+  #
+  # @return [nil]
   def delete_exercise(id)
     db = connect_to_db()
     db.execute("DELETE FROM exercises WHERE Id = ?", id)
   end
 
   # Fetch all roles
+  #
+  # @return [Array<Hash>] the roles
   def fetch_roles()
     db = connect_to_db()
     db.execute("SELECT * FROM roles")
@@ -160,6 +166,8 @@ module Modules
   # Fetch the number of users with a role
   #
   # @param id [Integer] the id of the role
+  #
+  # @return [Integer] the number of users with the role
   def fetch_role_count(id)
     db = connect_to_db()
     db.execute("SELECT * FROM role_users WHERE role_id = ?", id).length
@@ -168,6 +176,8 @@ module Modules
   # Fetch all users with a role
   #
   # @param id [Integer] the id of the role
+  #
+  # @return [Array<Hash>] the users with the role
   def fetch_role_and_users(id)
     db = connect_to_db()
     db.execute(
@@ -178,6 +188,8 @@ module Modules
   # Fetch a role
   #
   # @param id [Integer] the id of the role
+  #
+  # @return [Hash] the role
   def fetch_role(id)
     db = connect_to_db()
     db.execute("SELECT * FROM roles WHERE Id = ?", id).first
@@ -187,6 +199,8 @@ module Modules
   # 
   # @param name [String] the name of the role
   # @param level [Integer] the level of the role
+  #
+  # @return [nil]
   def new_role(name, level)
     db = connect_to_db()
     db.execute("INSERT INTO roles (Name, Level) VALUES (?, ?)", name, level)
@@ -197,6 +211,8 @@ module Modules
   # @param id [Integer] the id of the role
   # @param name [String] the name of the role
   # @param level [Integer] the level of the role
+  #
+  # @return [nil]
   def update_role(id, name, level)
     db = connect_to_db()
     db.execute("UPDATE roles SET Name = ?, Level = ? WHERE Id = ?", name, level, id)
@@ -205,6 +221,8 @@ module Modules
   # Delete a role
   #
   # @param id [Integer] the id of the role
+  #
+  # @return [nil]
   def delete_role(id)
     db = connect_to_db()
     db.execute("DELETE FROM roles WHERE Id = ?", id)
@@ -213,6 +231,8 @@ module Modules
   # Fetch all solutions for a specific exercise
   # 
   # @param id [Integer] the id of the exercise
+  #
+  # @return [Array<Hash>] the solutions
   def fetch_solutions(id)
     db = connect_to_db()
     db.execute(
@@ -225,6 +245,8 @@ module Modules
   # @param user_id [Integer] the id of the user
   # @param exercise_id [Integer] the id of the exercise
   # @param solution [String] the solution
+  #
+  # @return [nil]
   def create_solution(user_id, exercise_id, solution)
     db = connect_to_db()
     db.execute("INSERT INTO solutions (exercise_id, Solution, user_id) VALUES (?, ?, ?)", exercise_id, solution,
@@ -234,6 +256,8 @@ module Modules
   # Fetch a solution
   #
   # @param id [Integer] the id of the solution
+  #
+  # @return [Hash] the solution
   def fetch_solution(id)
     db = connect_to_db()
     db.execute("SELECT * FROM solutions WHERE solution_id = ?", id).first
@@ -242,6 +266,8 @@ module Modules
   # Fetch a solution and the user who created it
   #
   # @param id [Integer] the id of the solution
+  #
+  # @return [Hash] the solution and the user
   def fetch_solution_and_users(id)
     db = connect_to_db()
     db.execute("SELECT * FROM solutions INNER JOIN users on solutions.user_id = id WHERE solution_id = ?", id).first
@@ -250,6 +276,8 @@ module Modules
   # Delete a solution
   #
   # @param id [Integer] the id of the solution
+  #
+  # @return [nil]
   def delete_solution(id)
     db = connect_to_db()
     db.execute("DELETE FROM solutions WHERE solution_id = ?", id)
@@ -259,6 +287,8 @@ module Modules
   #
   # @param id [Integer] the id of the solution
   # @param solution [String] the solution
+  #
+  # @return [nil]
   def update_solution(id, solution)
     db = connect_to_db()
     db.execute("UPDATE solutions SET Solution = ? WHERE solution_id = ?", solution, id)

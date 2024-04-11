@@ -6,6 +6,7 @@ module Modules
   def connect_to_db()
     db = SQLite3::Database.new("db/main.sqlite")
     db.results_as_hash = true
+    db.execute("PRAGMA foreign_keys=ON")
     db
   end
 
@@ -16,7 +17,7 @@ module Modules
   # @return [nil]
   def register_user(email, password, username)
     db = connect_to_db()
-    db.execute("INSERT INTO users (Email, Pwd, Name) VALUES (?, ?, ?)", email, BCrypt::Password.create(password),
+    db.execute("INSERT INTO users (Email, Pwd, Name) VALUES (?, ?, ?)", email, password,
                username)
   end
 
@@ -30,7 +31,7 @@ module Modules
   # Fetch a user
   # @param id [Integer] the id of the user
   # @return [Hash] the user
-  def fetch_user(id)
+  def fetch_user_from_id(id)
     db = connect_to_db()
     db.execute("SELECT * FROM users WHERE Id = ?", id).first
   end
@@ -43,7 +44,7 @@ module Modules
   # @return [nil]
   def update_user(id, email, password, username)
     db = connect_to_db()
-    db.execute("UPDATE users SET Email = ?, Pwd = ?, Name = ? WHERE Id = ?", email, BCrypt::Password.create(password),
+    db.execute("UPDATE users SET Email = ?, Pwd = ?, Name = ? WHERE Id = ?", email, password,
                username, id)
   end
 
@@ -196,7 +197,7 @@ module Modules
   end
 
   # Create a new role
-  # 
+  #
   # @param name [String] the name of the role
   # @param level [Integer] the level of the role
   #
@@ -229,7 +230,7 @@ module Modules
   end
 
   # Fetch all solutions for a specific exercise
-  # 
+  #
   # @param id [Integer] the id of the exercise
   #
   # @return [Array<Hash>] the solutions

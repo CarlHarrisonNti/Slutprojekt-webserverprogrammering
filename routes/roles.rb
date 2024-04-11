@@ -69,7 +69,7 @@ end
 post "/admin/roles/:id/update" do
   name, level = params[:name], params[:level]
   update_role(params[:id], name, level)
-  redirect "/roles"
+  redirect "/admin/roles"
 end
 
 # Route to delete a role
@@ -80,5 +80,5 @@ end
 # @param :id [Integer] the id of the role
 post "/admin/roles/:id/delete" do
   delete_role(params[:id])
-  redirect "/roles"
+  redirect "/admin/roles"
 end

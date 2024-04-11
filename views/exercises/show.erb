@@ -5,6 +5,7 @@
         <h1 class="text-center text-5xl font-semibold place-self-center p-5"><%= @exercise["Name"] %></h1>
         <img src="<%= @exercise["Icon"]%>" alt="" class="place-items-center">
       </section>
+      <% if session[:user_id] %>
       <section class="bg-sky-100 rounded-xl flex flex-col">
         <h2 class="text-center text-3xl font-semibold place-self-center p-5">Submit your solution</h2>
         <a
@@ -12,6 +13,7 @@
           href="/private/exercises/<%= @exercise["Id"]%>/solutions/new"
         >Upload</a>
       </section>
+      <% end %>
       <nav class="bg-sky-100 rounded-xl flex flex-col">
         <h2 class="text-center text-3xl font-semibold place-self-center p-5">Sections</h2>
         <ul class="flex flex-col">

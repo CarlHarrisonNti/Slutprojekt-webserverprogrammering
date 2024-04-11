@@ -11,10 +11,17 @@
         href="/admin/roles/<%= @role["Id"] %>/edit"
         class="bg-yellow-500 p-3 rounded-xl w-2/5 text-center"
       >Edit</a>
-      <a
-        href="/admin/roles/<%= @role["Id"] %>/delete"
-        class="bg-red-800 p-3 rounded-xl w-2/5 text-center"
-      >Delete</a>
+      <form action="/admin/roles/<%= @role["Id"] %>/delete" method="POST" class="w-2/5 h-16 flex items-center justify-center">
+        <input
+          type="submit"
+          value="Delete"
+          class="
+            bg-red-800 p-3 rounded-xl w-full text-center
+            cursor-pointer hover:bg-red-400
+          "
+      >
+      </form>
+      
     </div>
     <h2>
       Level:

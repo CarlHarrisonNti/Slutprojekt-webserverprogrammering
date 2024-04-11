@@ -1,4 +1,8 @@
-require_relative "../handlers.rb"
+
+# Reset the error message after visit "/users/new"
+after "/users/new" do
+  session[:error] = nil
+end
 
 # Login a user
 #
@@ -56,7 +60,8 @@ post "/users" do
     session[:error] = password_check
     redirect "/users/new"
   end
-  register_user(email, password, username)
+  hashed_password = BCrypt::Password.create(password)
+  register_user(email, hashed_password, username)
   redirect "/login"
 end
 
@@ -69,25 +74,25 @@ end
 
 # Page where admins can see individual user in database
 # @todo use only one query to fetch user and user roles
-# @see Model#fetch_user
+# @see Model#fetch_user_from_id
 # @see Model#fetch_user_roles
 #
 # @param :id [Integer] the id of the user
 get "/admin/users/:id" do
-  @user = fetch_user(params[:id])
+  @user = fetch_user_from_id(params[:id])
   @user_roles = fetch_user_roles(params[:id])
   erb :"users/show"
 end
 
 # Page to edit a user
 #
-# @see Model#fetch_user
+# @see Model#fetch_user_from_id
 # @see Model#fetch_roles
 # @see Model#fetch_user_roles
 #
 # @param :id [Integer] the id of the user
 get "/admin/users/:id/edit" do
-  @user = fetch_user(params[:id])
+  @user = fetch_user_from_id(params[:id])
   @roles = fetch_roles
   @user_roles = fetch_user_roles(params[:id])
   erb :"users/edit"
@@ -106,11 +111,12 @@ end
 post "/admin/users/:id/update" do
   email, password, username, roles = params[:email], params[:password], params[:username], params[:roles]
   unless password
-    password = fetch_user(params[:id])["Pwd"]
+    password = fetch_user_from_id(params[:id])["Pwd"]
   end
-  update_user(params[:id], email, password, username)
+  hashed_password = BCrypt::Password.create(password)
+  update_user(params[:id], email, hashed_password, username)
   update_users_roles(params[:id], roles)
-  redirect "/users"
+  redirect "/admin/users"
 end
 
 # Delete a user
@@ -118,7 +124,7 @@ end
 # @see Model#delete_user
 post "/admin/users/:id/delete" do
   delete_user(params[:id])
-  redirect "/users"
+  redirect "/admin/users"
 end
 
 # Logout a user

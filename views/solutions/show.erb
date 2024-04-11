@@ -3,6 +3,7 @@
     <div class="flex justify-between">
       <h1 class="text-black text-2xl m-5"><%= @solution["Name"] %>'s Solution</h1>
       <div class="flex gap-5">
+        <% if private(@solution["solution_id"]) %>
         <div class="h-16 hover:bg-yellow-400 bg-yellow-500 rounded-xl">
           <a
             href="/private/exercises/<%= @solution["exercise_id"] %>/solutions/<%= @solution["solution_id"] %>/edit"
@@ -22,8 +23,11 @@
             "
           >
         </form>
+        <% end %>
       </div>
+     
     </div>
+     
     <pre class="whitespace-pre"><code class="language-ruby whitespace-pre"><%= @solution["Solution"] %></code></pre>
   </div>
 </div>

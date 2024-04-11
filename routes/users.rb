@@ -60,8 +60,7 @@ post "/users" do
     session[:error] = password_check
     redirect "/users/new"
   end
-  hashed_password = BCrypt::Password.create(password)
-  register_user(email, hashed_password, username)
+  register_user(email, password, username)
   redirect "/login"
 end
 
@@ -113,8 +112,7 @@ post "/admin/users/:id/update" do
   unless password
     password = fetch_user_from_id(params[:id])["Pwd"]
   end
-  hashed_password = BCrypt::Password.create(password)
-  update_user(params[:id], email, hashed_password, username)
+  update_user(params[:id], email, password, username)
   update_users_roles(params[:id], roles)
   redirect "/admin/users"
 end

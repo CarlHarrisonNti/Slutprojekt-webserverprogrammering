@@ -17,7 +17,7 @@ module Modules
   # @return [nil]
   def register_user(email, password, username)
     db = connect_to_db()
-    db.execute("INSERT INTO users (Email, Pwd, Name) VALUES (?, ?, ?)", email, password,
+    db.execute("INSERT INTO users (Email, Pwd, Name) VALUES (?, ?, ?)", email, BCrypt::Password.create(password),
                username)
   end
 
@@ -44,7 +44,7 @@ module Modules
   # @return [nil]
   def update_user(id, email, password, username)
     db = connect_to_db()
-    db.execute("UPDATE users SET Email = ?, Pwd = ?, Name = ? WHERE Id = ?", email, password,
+    db.execute("UPDATE users SET Email = ?, Pwd = ?, Name = ? WHERE Id = ?", email, BCrypt::Password.create(password),
                username, id)
   end
 

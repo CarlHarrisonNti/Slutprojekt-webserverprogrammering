@@ -21,9 +21,15 @@ end
 # @param :level [Integer] the level of the role, needs to be between 1-5
 post "/admin/roles" do
   name, level = params[:name], params[:level]
-  if 1..5.include?(level)
+
+  if session[:level] < level.to_i
+    flash.next[:notice] = "You can't create a role with a higher level than your own"
+    redirect "/admin/roles/new"
+  end
+
+  if (1..5).include?(level.to_i)
     new_role(name, level)
-    redirect "/roles"
+    redirect "/admin/roles"
   end
 
   flash.next[:notice] = "The level has to be between 1 and 5, you wrote #{level}"

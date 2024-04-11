@@ -83,6 +83,36 @@ def delete_files(*paths)
   end
 end
 
+# Method to update a file
+#
+# @param path [String] the path to the file directory
+# @param folder [String] the folder of the file
+# @param file [File] the file to update
+#
+# @return [String] the path of the updated file
+def update_file(path, folder, file)
+  temp_file = file[:tempfile]
+  "#{path}/#{create_file(folder, temp_file.read, file[:filename])}"
+end
+
+# Method to validate files
+#
+# @param files [Array<Hash<name: <file: String, extensions: <Array<String>>>> the files to validate
+#
+# @return [nil]
+def validate_files(redirect_url, **files)
+  result = []
+  files.each do |key, value|
+    _, extension = value[:file].split(".")
+    result << value[:file] unless value[:extensions].include?(".#{extension}")
+  end
+
+  unless result.empty?
+    flash.next[:notice] = "The following files are not allowed: #{result.join(", ")}"
+    redirect redirect_url
+  end
+end
+
 # Landing page
 get "/" do
   erb :index

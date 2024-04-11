@@ -18,7 +18,7 @@ post "/login" do
   email, password = params[:email], params[:password]
   login_attempts[request.ip] ||= []
   login_attempts[request.ip] << Time.now
-  session[:login_attempts] ||= { attempts: 0, time: Time.now }
+  #session[:login_attempts] ||= { attempts: 0, time: Time.now }
   if login_attempts[request.ip].size > 3 && Time.now - login_attempts[request.ip].last < 60
     halt 401, "Too many login attempts, try again later."
   end
@@ -56,7 +56,6 @@ post "/users" do
     session[:error] = password_check
     redirect "/users/new"
   end
-  p password
   register_user(email, password, username)
   redirect "/login"
 end
@@ -77,7 +76,6 @@ end
 get "/admin/users/:id" do
   @user = fetch_user(params[:id])
   @user_roles = fetch_user_roles(params[:id])
-  p @user_roles
   erb :"users/show"
 end
 

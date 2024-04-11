@@ -41,6 +41,8 @@ post "/private/exercises/:id/solutions" do
   solution_file = params[:solution_file]
   solution_temp_file = solution_file[:tempfile]
 
+  validate_files("/private/exercises/:id/solutions/new", solution: {file: solution_file[:filename], extensions: [".rb"]})
+
   solution = File.read(solution_temp_file)
 
   exercise_id = params[:id]

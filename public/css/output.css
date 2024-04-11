@@ -974,7 +974,7 @@ video {
   font-family:Arial, Helvetica, sans-serif;
   bottom: 10px;
   right:10px;
-  height: 100px;
+  height: auto;
 }
 
 .markdown > h4 {

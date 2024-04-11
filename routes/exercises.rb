@@ -50,6 +50,11 @@ post "/protected/exercises" do
   instructions_temp_file = instructions[:tempfile]
   test_file_temp_file = test_file[:tempfile]
 
+  validate_files("/protected/exercises/new", 
+                icon: {file: icon[:filename], extensions: [".svg"]}, 
+                instructions: {file: instructions[:filename], extensions: [".md"]}, 
+                test_file: {file: test_file[:filename], extensions: [".rb"]})
+
   icon_path = "/icons/exercises/#{create_file("icons/exercises", icon_temp_file.read, icon[:filename])}"
   instructions_path = "public/instructions/#{create_file("instructions", instructions_temp_file.read, instructions[:filename])}"
   test_path = "public/tests/#{create_file("tests", test_file_temp_file.read, test_file[:filename])}"
@@ -63,7 +68,6 @@ end
 # @see Model#fetch_exercise
 get "/protected/exercises/:id/edit" do
   @exercise = fetch_exercise(params[:id])
-  p @exercise
   erb :"exercises/edit"
 end
 
@@ -85,24 +89,21 @@ post "/protected/exercises/:id/update" do
   exercise = fetch_exercise(params[:id])
 
   if icon
-    icon_temp_file = icon[:tempfile]
-    icon_path = "/icons/exercises/#{create_file("icons/exercises", icon_temp_file.read, icon[:filename])}"
+    update_file("/icons/exercise", "icons/exercises", icon)
     delete_files("public#{fetch_exercise(params[:id])["Icon"]}")
   else
     icon_path = exercise["Icon"]
   end
 
   if instructions
-    instructions_temp_file = instructions[:tempfile]
-    instructions_path = "public/instructions/#{create_file("instructions", instructions_temp_file.read, instructions[:filename])}"
+    update_file("public/instructions", "instructions", instructions)
     delete_files(exercise["Instructions"])
   else
     instructions_path = exercise["Instructions"]
   end
 
   if test_file
-    test_file_temp_file = test_file[:tempfile]
-    test_path = "public/tests/#{create_file("tests", test_file_temp_file.read, test_file[:filename])}"
+    update_file("public/tests", "tests", test_file)
     delete_files(exercise["Test_File"])
   else
     test_path = exercise["Test_File"]
@@ -121,7 +122,6 @@ end
 post "/protected/exercises/:id/delete" do
   exercise = fetch_exercise(params[:id])
   delete_files(exercise["Instructions"], exercise["Test_File"], "public#{exercise["Icon"]}")
-  p "public#{exercise["Icon"]}"
   info = delete_exercise(params[:id])
   redirect "/exercises"
 end
